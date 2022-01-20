@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Tiba Simple Map</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		#map {
+			width: 100%;
+			height:525px;
+		}
+	</style>
+
+	
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+
+	var map = L.map('map', {
+		crs: L.CRS.Simple,
+		minZoom: -3
+	});
+
+	var yx = L.latLng;
+
+	var xy = function(x, y) {
+		if (L.Util.isArray(x)) {    // When doing xy([x, y]);
+			return yx(x[1], x[0]);
+		}
+		return yx(y, x);  // When doing xy(x, y);
+	};
+
+	var bounds = [xy(-25, -26.5), xy(2304, 2048)];
+	var image = L.imageOverlay('floor-07-map.png', bounds).addTo(map);
+
+	var sol      = xy(175.2, 145.0);
+	var mizar    = xy( 41.6, 130.1);
+	var kruegerZ = xy( 13.4,  56.5);
+	var deneb    = xy(218.7,   8.3);
+
+	L.marker(     sol).addTo(map).bindPopup(      'Sol');
+	L.marker(   mizar).addTo(map).bindPopup(    'Mizar');
+	L.marker(kruegerZ).addTo(map).bindPopup('Krueger-Z');
+	L.marker(   deneb).addTo(map).bindPopup(    'Deneb');
+
+	
+	map.setView(xy(1000, 1000), 1);
+
+</script>
+
+
+
+</body>
+</html>
